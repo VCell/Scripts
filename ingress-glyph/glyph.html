@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Glyph</title>
+    <style>
+        table {
+
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        img {
+            width: 60px;
+            /* 或根据需要调整图片大小 */
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+
+        <tbody id="sentenceTable">
+        </tbody>
+    </table>
+    <script>
+        fetch('glyph5.txt')
+            .then(response => response.text())
+            .then(text => {
+                const lines = text.split('\n');
+                const tableBody = document.getElementById('sentenceTable');
+                lines.forEach(line => {
+                    if (line.trim().length > 0) {
+                        const row = document.createElement('tr');
+                        const sentenceCell = document.createElement('td');
+                        sentenceCell.textContent = line;
+                        row.appendChild(sentenceCell);
+
+                        const imagesCell = document.createElement('td');
+                        line.split(' ').forEach(word => {
+                            const img = document.createElement('img');
+                            img.src = `pic/${word}_Glyph.png`;
+                            imagesCell.appendChild(img);
+                        });
+                        row.appendChild(imagesCell);
+                        tableBody.appendChild(row);
+                    }
+                });
+            });
+    </script>
+</body>
+
+</html>
